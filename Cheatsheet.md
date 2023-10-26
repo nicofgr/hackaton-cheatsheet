@@ -178,9 +178,9 @@ class BST{
 
 ## Grafos
 ### Matriz de Adjacência
-### Lista de Adjacência (Codigo em C)
+### Lista de Adjacência
 OBS: Precisa usar a Lista de Adjacência
-```c
+```cpp
 class Graph{
     vector<LinkedList*> adjacencyList;
     int nVertices;
