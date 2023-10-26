@@ -179,7 +179,7 @@ class BST{
 ## Grafos
 <!-- ### Matriz de Adjacência -->
 ### Lista de Adjacência
-OBS: Precisa usar a Lista de Adjacência
+OBS: Precisa usar a Lista Ligada
 ```cpp
 class Graph{
     vector<LinkedList*> adjacencyList;
