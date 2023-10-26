@@ -209,8 +209,55 @@ Usa pilha
 #### Busca em Largura
 Usa fila
 ### Distancia em Grafos
-Sem peso: Busca em Largura <br>
-Com peso: Dijkstra
+Dijkstra: Cria outro grafo com os menores caminhos entre vértices.
+```cpp
+void menor_caminho_bfs(grafo* g, int startV, int finishV){    //  BFS modificada para criar um vetor dos pais
+    int* pai = (int*)malloc(g->nVertices*sizeof(int));
+    fila* aux = cria_fila();
+    fila* enfilerado = cria_fila();
+
+    push_fila(aux, startV);
+    push_fila(enfilerado, startV);
+    while(get_queue_size(aux) > 0){
+        int currentVertice = pop_fila(aux);    //  Vertice atual
+        nodo* neighboursList = g->adjacencyList[currentVertice-1]->head;    //  Vizinhos do vertice atual
+        
+        while(neighboursList != NULL){    //  Enquanto não chega no fim dos vizinhos
+            if(is_in_queue(enfilerado, neighboursList->info1) == 0){    //  Se o vizinho não foi enfileirado
+                if(neighboursList->info2 > g->weightOffset){    //  Se tiver conexão com o vizinho
+                    push_fila(aux, neighboursList->info1);    //  Enfileira
+                    push_fila(enfilerado, neighboursList->info1);    //  Marca como enfilerado
+                    pai[neighboursList->info1] = currentVertice;    //  Marca o pai do vizinho como o vert atual
+                }
+            }
+            neighboursList = neighboursList->prox;    //  Proximo vizinho
+        }
+    }
+    free_queue(aux);
+
+    if(is_in_queue(enfilerado, finishV) == 0){    //  Se os vértices não tiverem no mesmo grafo conexo (sem caminho)
+        printf("sem caminho entre %d e %d", startV, finishV);
+        free_queue(enfilerado);
+        free(pai);
+        return;
+    }
+    int nPontes = 0;
+    nPontes = _print_menor_caminho(pai, startV, finishV);
+    printf(" (%d pontes)", nPontes);
+    free_queue(enfilerado);
+    free(pai);
+}
+
+int _print_menor_caminho(int* pai, int startV, int finishV){
+    int nPontes = 0;
+    if(startV != finishV){
+        nPontes = 1 + _print_menor_caminho(pai, startV, pai[finishV]);
+        printf(" -> ");
+    }
+    printf("%d", finishV);
+    return nPontes;
+}
+```
 ### Tabela Hash
 
 ## Sorting
