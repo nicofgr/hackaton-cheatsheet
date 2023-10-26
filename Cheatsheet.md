@@ -127,7 +127,7 @@ int main(){
     return 0;
 }
 ```
-### Fila
+<!--  ### Fila -->
 
 ## Arvores
 ### Arvore Binaria de Busca (BST)
@@ -173,11 +173,11 @@ class BST{
 };
 ```
 
-### Arvore AVL
-### Arvore B
+<!--  ### Arvore AVL
+### Arvore B -->
 
 ## Grafos
-### Matriz de Adjacência
+<!-- ### Matriz de Adjacência -->
 ### Lista de Adjacência
 OBS: Precisa usar a Lista de Adjacência
 ```cpp
@@ -202,7 +202,7 @@ class Graph{
     }
 };
 ```
-### Matriz de Incidência
+<!-- ### Matriz de Incidência -->
 ### Caminhamento
 #### Busca em Profundidade (Codigo em C)
 Usa pilha
@@ -308,7 +308,7 @@ int _print_menor_caminho(int* pai, int startV, int finishV){
     return nPontes;
 }
 ```
-### Tabela Hash
+<!--  ### Tabela Hash
 
 ## Sorting
 
@@ -320,4 +320,4 @@ int _print_menor_caminho(int* pai, int startV, int finishV){
 
 ## Automatos
 ### Automato de Estado Finito
-### Linguagem contavel
+### Linguagem contavel -->
