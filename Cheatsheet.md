@@ -178,9 +178,9 @@ class BST{
 
 ## Grafos
 ### Matriz de Adjacência
-### Lista de Adjacência
+### Lista de Adjacência (Codigo em C)
 OBS: Precisa usar a Lista de Adjacência
-```cpp
+```c
 class Graph{
     vector<LinkedList*> adjacencyList;
     int nVertices;
@@ -204,13 +204,63 @@ class Graph{
 ```
 ### Matriz de Incidência
 ### Caminhamento
-#### Busca em Profundidade
+#### Busca em Profundidade (Codigo em C)
 Usa pilha
-#### Busca em Largura
+```c
+lista* depth_first_search(grafo* g, int startV){
+    pilha* visitado = cria_pilha();
+    visitado = _dfs_recursion(g, startV, visitado);    //  Chama a componente recursiva
+
+    lista* dfs = stack_to_list_transfer(visitado);    //Transfere da pilha pra uma lista
+    free_stack(visitado);
+    return dfs;
+}
+
+pilha* _dfs_recursion(grafo* g, int currentVertice, pilha* visitado){    //  MUDAR AQUI PRA CONTINUE
+    push_pilha(visitado, currentVertice);    //  Marcando vértice atual como visitado
+    nodo* neighboursList = g->adjacencyList[currentVertice - 1]->head;    //  Vizinhos do vértice atual
+
+    while(neighboursList != NULL){
+        if(is_in_stack(visitado, neighboursList->info1) == 0){    //  Se vizinho não visitado
+            if(neighboursList->info2 > g->weightOffset){    //  Se a ponte estiver acima do nivel da água então
+                visitado = _dfs_recursion(g, neighboursList->info1, visitado);    //  Visita os vizinhos do vizinho
+            }else
+                neighboursList = neighboursList->prox;      //  Senão passa pro próximo vizinho
+        }else
+            neighboursList = neighboursList->prox;    // Senão passa pro próximo vizinho
+    }
+    return visitado;
+}
+```
+#### Busca em Largura (Codigo em C)
 Usa fila
-### Distancia em Grafos
+```c
+lista* breath_first_search(grafo* g, int startV){
+    fila* aux = cria_fila();
+    lista* enfilerado = cria_lista();
+
+    push_fila(aux, startV);
+    enfilerado = lista_insere_final(enfilerado, startV, 0);    //  Enfilera o vértice inicial
+    while(get_queue_size(aux) > 0){    //  Enquanto a fila tiver vértices
+        int currentVertice = pop_fila(aux);     // Pega um vertice da fila
+        nodo* neighboursList = g->adjacencyList[currentVertice-1]->head;    // Vizinhos do vertice atual
+
+        while(neighboursList != NULL){      // Ainda tem vizinhos não verificados
+            if(is_in_list(enfilerado, neighboursList->info1) == 0){    // Verifica se o vizinho não foi enfileirado
+                push_fila(aux, neighboursList->info1);      // Senão, enfilera
+                enfilerado = lista_insere_final(enfilerado, neighboursList->info1, 0);   // Marca como enfilerado
+            }
+            neighboursList = neighboursList->prox;     //  Passa pro proximo vizinho
+        }
+    }
+    free_queue(aux);
+    return enfilerado;
+}
+
+```
+### Distancia em Grafos (Codigo em C)
 Dijkstra: Cria outro grafo com os menores caminhos entre vértices.
-```cpp
+```c
 void menor_caminho_bfs(grafo* g, int startV, int finishV){    //  BFS modificada para criar um vetor dos pais
     int* pai = (int*)malloc(g->nVertices*sizeof(int));
     fila* aux = cria_fila();
